@@ -32,3 +32,10 @@
 
 # Ignore .idea files
 .idea
+
+# Ignore bundle dir
+/vendor/bundle
+
+# Ignore .generators and .rakeTasks
+.generators
+.rakeTasks
