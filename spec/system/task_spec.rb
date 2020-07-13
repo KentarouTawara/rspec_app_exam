@@ -19,8 +19,7 @@ RSpec.describe 'Task', type: :system do
         visit project_path(project)
         click_link 'View Todos'
         # 画面遷移
-        handle = page.driver.browser.window_handles.last
-        page.driver.browser.switch_to.window(handle)
+        switch_to_window(windows.last)
         expect(page).to have_content task.title
         expect(Task.count).to eq 1
         expect(current_path).to eq project_tasks_path(project)
