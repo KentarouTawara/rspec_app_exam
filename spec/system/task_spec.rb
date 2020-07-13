@@ -109,10 +109,8 @@ RSpec.describe 'Task', type: :system do
         visit project_tasks_path(project)
         click_link 'Destroy'
         page.driver.browser.switch_to.alert.accept
-        within('tbody') do
-          expect(page).not_to have_content task.title
-          expect(Task.count).to eq 0
-        end
+        expect(find('.task_list')).not_to have_content(task.title)
+        expect(Task.count).to eq 0
         expect(current_path).to eq project_tasks_path(project)
       end
     end
