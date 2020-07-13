@@ -6,7 +6,7 @@ RSpec.describe 'Task', type: :system do
     let(:task){ create(:task, project_id: project.id) }
 
     context '正常系' do
-      fit '一覧ページにアクセスした場合、Taskが表示されること' do
+      it '一覧ページにアクセスした場合、Taskが表示されること' do
         # TODO: ローカル変数ではなく let を使用してください
         visit project_tasks_path(project)
         expect(page).to have_content task.title
@@ -14,12 +14,13 @@ RSpec.describe 'Task', type: :system do
         expect(current_path).to eq project_tasks_path(project)
       end
 
-      xit 'Project詳細からTask一覧ページにアクセスした場合、Taskが表示されること' do
+      it 'Project詳細からTask一覧ページにアクセスした場合、Taskが表示されること', js: true do
         # FIXME: テストが失敗するので修正してください
-        project = FactoryBot.create(:project)
-        task = FactoryBot.create(:task, project_id: project.id)
         visit project_path(project)
         click_link 'View Todos'
+        # 画面遷移
+        handle = page.driver.browser.window_handles.last
+        page.driver.browser.switch_to.window(handle)
         expect(page).to have_content task.title
         expect(Task.count).to eq 1
         expect(current_path).to eq project_tasks_path(project)
